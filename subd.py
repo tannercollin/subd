@@ -1,11 +1,13 @@
-import paho.mqtt.client as mqtt
+from time import sleep
+from instapush import App
 
-def on_connect(client, userdata, rc):
-    print "Connected to server."
+apisecret = open('apisecret.txt').read().strip()
 
-client = mqtt.Client()
-client.on_connect = on_connect
+app = App('566f99bea4c48aba38ea4fe7', apisecret)
 
-client.connect("localhost")
+print '>' + apisecret + '<'
 
-client.loop_start()
+while True:
+    app.notify(event_name='newpost', trackers={'title': 'Hello world!'})
+    print "Notification sent."
+    sleep(10)
